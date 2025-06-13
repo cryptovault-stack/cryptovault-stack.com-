@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoVault - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-header p {
+            color: #b8b8b8;
+            font-size: 1.1rem;
+        }
+
+        /* Portfolio Overview */
+        .portfolio-overview {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .total-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .value-label {
+            font-size: 1.2rem;
+            color: #b8b8b8;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary, .btn-withdraw {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00d4ff;
+            border: 2px solid #00d4ff;
+        }
+
+        .btn-withdraw {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+        }
+
+        .btn-primary:hover, .btn-withdraw:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: #00d4ff;
+            color: #0f0f0f;
+        }
+
+        /* Holdings Grid */
+        .holdings-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .holdings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .holding-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .holding-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .crypto-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .crypto-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .crypto-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .crypto-info .symbol {
+            color: #b8b8b8;
+            font-size: 0.9rem;
+        }
+
+        .holding-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #b8b8b8;
+            margin-top: 0.2rem;
+        }
+
+        .change-positive {
+            color: #00ff88;
+        }
+
+        .change-negative {
+            color: #ff4757;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 15, 15, 0.9);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #b8b8b8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #00d4ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            margin: 15% auto;
+            padding: 3rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
+        .close:hover {
+            color: #00d4ff;
+        }
+
+        .pending-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: spin 2s linear infinite;
+        }
+
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: #ff6b35;
+            font-size: 2rem;
+        }
+
+        .modal p {
+            color: #b8b8b8;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .total-value {
+                font-size: 2.5rem;
+            }
+
+            .portfolio-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .holdings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">CryptoVault</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="user-profile">
+                <div class="profile-icon">JD</div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dashboard -->
+    <main class="dashboard">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <h1>Portfolio Dashboard</h1>
+                <p>Welcome back! Here's your portfolio overview</p>
+            </div>
+
+            <!-- Portfolio Overview -->
+            <div class="portfolio-overview">
+                <div class="total-value">$68,123,121</div>
+                <div class="value-label">Total Portfolio Value</div>
+                <div class="portfolio-actions">
+                  
+                    <button class="btn-withdraw" onclick="showWithdrawPending()">Withdraw Funds</button>
+                </div>
+            </div>
+
+            <!-- Holdings Section -->
+            <div class="holdings-section">
+                <h2 class="section-title">Your Holdings</h2>
+                <div class="holdings-grid">
+                    <div class="holding-card">
+                        <div class="crypto-header">
+                            <div class="crypto-icon">₿</div>
+                            <div class="crypto-info">
+                                <h3>Bitcoin</h3>
+                                <div class="symbol">BTC</div>
+                            </div>
+                        </div>
+                        <div class="holding-stats">
+                            <div class="stat">
+                                <div class="stat-value">12.5847</div>
+                                <div class="stat-label">Amount</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$45,234,567</div>
+                                <div class="stat-label">Value</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value change-positive">+12.4%</div>
+                                <div class="stat-label">24h Change</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="holding-card">
+                        <div class="crypto-header">
+                            <div class="crypto-icon">Ξ</div>
+                            <div class="crypto-info">
+                                <h3>Ethereum</h3>
+                                <div class="symbol">ETH</div>
+                            </div>
+                        </div>
+                        <div class="holding-stats">
+                            <div class="stat">
+                                <div class="stat-value">487.23</div>
+                                <div class="stat-label">Amount</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$18,456,789</div>
+                                <div class="stat-label">Value</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value change-positive">+8.7%</div>
+                                <div class="stat-label">24h Change</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="holding-card">
+                        <div class="crypto-header">
+                            <div class="crypto-icon">◎</div>
+                            <div class="crypto-info">
+                                <h3>Solana</h3>
+                                <div class="symbol">SOL</div>
+                            </div>
+                        </div>
+                        <div class="holding-stats">
+                            <div class="stat">
+                                <div class="stat-value">15,432</div>
+                                <div class="stat-label">Amount</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$3,876,543</div>
+                                <div class="stat-label">Value</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value change-negative">-3.2%</div>
+                                <div class="stat-label">24h Change</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="holding-card">
+                        <div class="crypto-header">
+                            <div class="crypto-icon">🔺</div>
+                            <div class="crypto-info">
+                                <h3>Cardano</h3>
+                                <div class="symbol">ADA</div>
+                            </div>
+                        </div>
+                        <div class="holding-stats">
+                            <div class="stat">
+                                <div class="stat-value">89,567</div>
+                                <div class="stat-label">Amount</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">$555,222</div>
+                                <div class="stat-label">Value</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value change-positive">+5.3%</div>
+                                <div class="stat-label">24h Change</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <a href="about.html">About Us</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Products</h3>
+                    <a href="#">Spot Trading</a>
+                    <a href="#">Futures</a>
+                    <a href="#">Staking</a>
+                    <a href="#">NFT Marketplace</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="contact.html">Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CryptoVault. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Withdraw Pending Modal -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="pending-icon">⏳</div>
+            <h2>Withdrawal Pending</h2>
+            <p>Your withdrawal request is being processed. This may take 24-48 hours to complete. You will receive an email confirmation once the transaction is finalized.</p>
+        </div>
+    </div>
+
+    <script>
+        function showWithdrawPending() {
+            document.getElementById('withdrawModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('withdrawModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('withdrawModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Animate numbers on load
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            const range = end - start;
+            const minTimer = 50;
+            let stepTime = Math.abs(Math.floor(duration / range));
+            stepTime = Math.max(stepTime, minTimer);
+            const startTime = new Date().getTime();
+            const endTime = startTime + duration;
+            let timer;
+
+            function run() {
+                const now = new Date().getTime();
+                const remaining = Math.max((endTime - now) / duration, 0);
+                const value = Math.round(end - (remaining * range));
+                if (obj) {
+                    obj.innerHTML = '$' + value.toLocaleString();
+                }
+                if (value == end) {
+                    clearInterval(timer);
+                }
+            }
+
+            timer = setInterval(run, stepTime);
+            run();
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

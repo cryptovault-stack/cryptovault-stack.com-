@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - CryptoVault Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .features-hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .features-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #b8b8b8;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .feature-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Main Features Grid */
+        .features-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon::after {
+            opacity: 0.3;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .feature-description {
+            color: #b8b8b8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .feature-highlights {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-highlights li {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        /* Showcase Section */
+        .showcase-section {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem;
+            margin: 6rem 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .showcase-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .showcase-content p {
+            font-size: 1.2rem;
+            color: #d0d0d0;
+            margin-bottom: 2rem;
+        }
+
+        .showcase-visual {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(91, 115, 255, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-interface {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-chart {
+            height: 150px;
+            background: linear-gradient(45deg, #00d4ff20, #5b73ff20);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-chart::before {
+            content: '📈';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+        }
+
+        .demo-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .demo-stat {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            padding: 6rem 0;
+        }
+
+        .comparison-table {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .table-header {
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .table-header h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 0;
+        }
+
+        .comparison-row {
+            display: contents;
+        }
+
+        .comparison-cell {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .comparison-cell:first-child {
+            justify-content: flex-start;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-cell.highlight {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .check-mark {
+            color: #00ff88;
+            font-size: 1.5rem;
+        }
+
+        .x-mark {
+            color: #ff4757;
+            font-size: 1.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(91, 115, 255, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 4rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            color: #b8b8b8;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00d4ff;
+            border: 2px solid #00d4ff;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .pulsing {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 2fr 1fr;
+                font-size: 0.9rem;
+            }
+
+            .comparison-cell:nth-child(4n),
+            .comparison-cell:nth-child(4n-1) {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+       
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">CryptoVault</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+    
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="features-hero">
+        <div class="container">
+            <h1 class="hero-title">Powerful Features</h1>
+            <p class="hero-subtitle">Discover the advanced tools and capabilities that make CryptoVault the world's most
+                comprehensive cryptocurrency platform</p>
+
+            <div class="feature-categories">
+                <button class="category-btn active" onclick="showCategory('all')">All Features</button>
+                <button class="category-btn" onclick="showCategory('trading')">Trading</button>
+                <button class="category-btn" onclick="showCategory('security')">Security</button>
+                <button class="category-btn" onclick="showCategory('analytics')">Analytics</button>
+                <button class="category-btn" onclick="showCategory('mobile')">Mobile</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Core Trading Features</h2>
+            <div class="features-grid" id="tradingFeatures">
+                <div class="feature-card" data-category="trading">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Lightning-Fast Execution</h3>
+                    <p class="feature-description">Execute trades in under 10 milliseconds with our advanced matching
+                        engine and optimized infrastructure.</p>
+                    <ul class="feature-highlights">
+                        <li>Sub-10ms order execution</li>
+                        <li>99.99% uptime guarantee</li>
+                        <li>Real-time order book updates</li>
+                        <li>Low-latency global connectivity</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="trading">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Advanced Order Types</h3>
+                    <p class="feature-description">Sophisticated trading options including limit, market, stop-loss,
+                        take-profit, and algorithmic orders.</p>
+                    <ul class="feature-highlights">
+                        <li>15+ order types available</li>
+                        <li>Conditional orders</li>
+                        <li>Trailing stops</li>
+                        <li>Iceberg orders</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="analytics">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Professional Analytics</h3>
+                    <p class="feature-description">Institutional-grade charting tools with 100+ technical indicators and
+                        drawing tools.</p>
+                    <ul class="feature-highlights">
+                        <li>TradingView integration</li>
+                        <li>Custom indicators</li>
+                        <li>Multi-timeframe analysis</li>
+                        <li>Market depth visualization</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="security">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Multi-Layer Security</h3>
+                    <p class="feature-description">Bank-grade security with multi-signature wallets, cold storage, and
+                        advanced encryption.</p>
+                    <ul class="feature-highlights">
+                        <li>95% funds in cold storage</li>
+                        <li>Multi-signature technology</li>
+                        <li>2FA & biometric authentication</li>
+                        <li>Insurance coverage</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="mobile">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Mobile Trading</h3>
+                    <p class="feature-description">Full-featured mobile apps for iOS and Android with complete trading
+                        functionality.</p>
+                    <ul class="feature-highlights">
+                        <li>Native mobile apps</li>
+                        <li>Push notifications</li>
+                        <li>Biometric login</li>
+                        <li>Offline portfolio tracking</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="trading">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Algorithmic Trading</h3>
+                    <p class="feature-description">Build and deploy custom trading bots with our comprehensive API and
+                        strategy builder.</p>
+                    <ul class="feature-highlights">
+                        <li>REST & WebSocket APIs</li>
+                        <li>Strategy backtesting</li>
+                        <li>Risk management tools</li>
+                        <li>Portfolio automation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Section -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-grid">
+                <div class="showcase-content">
+                    <h3>Advanced Trading Interface</h3>
+                    <p>Experience professional-grade trading with our intuitive interface designed for both beginners
+                        and experts. Real-time data, customizable layouts, and powerful tools at your fingertips.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn btn-primary">Try Demo</a>
+                        <a href="#" class="btn btn-secondary">Watch Tutorial</a>
+                    </div>
+                </div>
+                <div class="showcase-visual floating">
+                    <div class="demo-interface">
+                        <div class="demo-chart pulsing"></div>
+                        <div class="demo-stats">
+                            <div class="demo-stat">
+                                <div style="color: #00d4ff;">BTC/USD</div>
+                                <div style="color: #00ff88;">$45,234.56</div>
+                            </div>
+                            <div class="demo-stat">
+                                <div style="color: #00d4ff;">24h Change</div>
+                                <div style="color: #00ff88;">+2.34%</div>
+                            </div>
+                            <div class="demo-stat">
+                                <div style="color: #00d4ff;">Volume</div>
+                                <div>$2.1B</div>
+                            </div>
+                            <div class="demo-stat">
+                                <div style="color: #00d4ff;">Market Cap</div>
+                                <div>$850B</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Features -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Advanced Capabilities</h2>
+            <div class="features-grid">
+                <div class="feature-card" data-category="trading">
+                    <div class="feature-icon">💎</div>
+                    <h3 class="feature-title">DeFi Integration</h3>
+                    <p class="feature-description">Access decentralized finance protocols directly through our platform
+                        with seamless integration.</p>
+                    <ul class="feature-highlights">
+                        <li>Yield farming opportunities</li>
+                        <li>Liquidity pool participation</li>
+                        <li>Cross-chain swaps</li>
+                        <li>Governance token voting</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="analytics">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">AI-Powered Insights</h3>
+                    <p class="feature-description">Leverage artificial intelligence for market analysis, trend
+                        prediction, and trading recommendations.</p>
+                    <ul class="feature-highlights">
+                        <li>Sentiment analysis</li>
+                        <li>Price predictions</li>
+                        <li>Risk assessment</li>
+                        <li>Portfolio optimization</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="security">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Institutional Custody</h3>
+                    <p class="feature-description">Enterprise-grade custody solutions with regulatory compliance and
+                        insurance coverage.</p>
+                    <ul class="feature-highlights">
+                        <li>Regulatory compliance</li>
+                        <li>Insurance protection</li>
+                        <li>Audit trails</li>
+                        <li>Multi-party approvals</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card" data-category="mobile">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Global Access</h3>
+                    <p class="feature-description">Trade from anywhere with multi-language support and local payment
+                        methods in 180+ countries.</p>
+                    <ul class="feature-highlights">
+                        <li>50+ languages supported</li>
+                        <li>Local payment methods</li>
+                        <li>24/7 customer support</li>
+                        <li>Regional compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="comparison-table">
+                <div class="table-header">
+                    <h3>Why Choose CryptoVault?</h3>
+                    <p>See how we compare to other platforms</p>
+                </div>
+                <div class="comparison-grid">
+                    <div class="comparison-row">
+                        <div class="comparison-cell"><strong>Feature</strong></div>
+                        <div class="comparison-cell highlight"><strong>CryptoVault</strong></div>
+                        <div class="comparison-cell"><strong>Competitor A</strong></div>
+                        <div class="comparison-cell"><strong>Competitor B</strong></div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">Trading Fees</div>
+                        <div class="comparison-cell highlight">0.1%</div>
+                        <div class="comparison-cell">0.25%</div>
+                        <div class="comparison-cell">0.5%</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">Available Cryptos</div>
+                        <div class="comparison-cell highlight">500+</div>
+                        <div class="comparison-cell">200+</div>
+                        <div class="comparison-cell">100+</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">Mobile App</div>
+                        <div class="comparison-cell highlight"><span class="check-mark">✓</span></div>
+                        <div class="comparison-cell"><span class="check-mark">✓</span></div>
+                        <div class="comparison-cell"><span class="x-mark">✗</span></div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">Advanced Charting</div>
+                        <div class="comparison-cell highlight"><span class="check-mark">✓</span></div>
+                        <div class="comparison-cell"><span class="x-mark">✗</span></div>
+                        <div class="comparison-cell"><span class="check-mark">✓</span></div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">DeFi Integration</div>
+                        <div class="comparison-cell highlight"><span class="check-mark">✓</span></div>
+                        <div class="comparison-cell"><span class="x-mark">✗</span></div>
+                        <div class="comparison-cell"><span class="x-mark">✗</span></div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell">24/7 Support</div>
+                        <div class="comparison-cell highlight"><span class="check-mark">✓</span></div>
+                        <div class="comparison-cell"><span class="check-mark">✓</span></div>
+                        <div class="comparison-cell"><span class="x-mark">✗</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h3 class="cta-title">Ready to Experience CryptoVault?</h3>
+            <p class="cta-text">Join millions of traders who trust CryptoVault for their cryptocurrency needs</p>
+            <div class="cta-buttons">
+                <a href="index.html">
+                    <button class="btn btn-primary">Start
+                        Back to home</button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showCategory(category) {
+            const buttons = document.querySelectorAll('.category-btn');
+            const cards = document.querySelectorAll('.feature-card');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide cards based on category
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.6s ease-out';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Add scroll animations
+        function addScrollAnimations() {
+            const cards = document.querySelectorAll('.feature-card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.8s ease-out';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => observer.observe(card));
+        }
+
+        // Initialize animations when page loads
+        document.addEventListener('DOMContentLoaded', addScrollAnimations);
+
+        // Add CSS animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

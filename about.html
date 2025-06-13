@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About CryptoVault - Secure Digital Asset Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* About Section Styles */
+        .about-section {
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #b8b8b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Story Section */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .story-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #00d4ff;
+        }
+
+        .story-content p {
+            font-size: 1.1rem;
+            color: #d0d0d0;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-visual {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(91, 115, 255, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .founding-year {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .founding-text {
+            font-size: 1.2rem;
+            color: #b8b8b8;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            margin-bottom: 6rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #b8b8b8;
+            font-weight: 500;
+        }
+
+        /* Mission & Vision */
+        .mission-vision {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 6rem;
+        }
+
+        .mission-card,
+        .vision-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .mission-card:hover,
+        .vision-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .card-text {
+            color: #d0d0d0;
+            font-size: 1.1rem;
+        }
+
+        /* Team Section */
+        .team-section {
+            margin-bottom: 6rem;
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .team-header h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .member-role {
+            color: #00d4ff;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .member-bio {
+            color: #b8b8b8;
+            font-size: 0.95rem;
+        }
+
+        /* Values Section */
+        .values-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .values-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .values-header h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .value-description {
+            color: #b8b8b8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .story-grid,
+            .mission-vision {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .founding-year {
+                font-size: 3rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #5b73ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+       
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">CryptoVault</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+    
+        </nav>
+    </header>
+
+    <div class="about-section">
+        <div class="container">
+            <!-- Header -->
+            <div class="section-header">
+                <h1 class="section-title">About CryptoVault</h1>
+                <p class="section-subtitle">Pioneering the future of digital finance with innovation, security, and
+                    trust at our core</p>
+            </div>
+
+            <!-- Our Story -->
+            <div class="story-grid">
+                <div class="story-content">
+                    <h3>Our Story</h3>
+                    <p>Founded in 2018 by a team of blockchain pioneers and financial experts, CryptoVault emerged from
+                        a vision to democratize access to digital assets while maintaining institutional-grade security
+                        standards.</p>
+                    <p>What started as a small team of passionate developers has grown into a global platform serving
+                        millions of users across 180+ countries, facilitating billions in daily trading volume.</p>
+                    <p>Our journey has been marked by continuous innovation, regulatory compliance, and an unwavering
+                        commitment to our users' financial success and security.</p>
+                </div>
+                <div class="story-visual">
+                    <div class="founding-year">2018</div>
+                    <div class="founding-text">The Year We Changed Crypto Forever</div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">180+</div>
+                        <div class="stat-label">Countries Served</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$50B+</div>
+                        <div class="stat-label">Trading Volume</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Cryptocurrencies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Customer Support</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission & Vision -->
+            <div class="mission-vision">
+                <div class="mission-card">
+                    <div class="card-icon">🎯</div>
+                    <h4 class="card-title">Our Mission</h4>
+                    <p class="card-text">To democratize access to digital assets by providing a secure, user-friendly
+                        platform that empowers individuals and institutions to participate in the future of finance with
+                        confidence.</p>
+                </div>
+                <div class="vision-card">
+                    <div class="card-icon">🚀</div>
+                    <h4 class="card-title">Our Vision</h4>
+                    <p class="card-text">To become the world's most trusted and innovative cryptocurrency platform,
+                        leading the global transition to a decentralized financial ecosystem that benefits everyone.</p>
+                </div>
+            </div>
+
+            <!-- Leadership Team -->
+            <div class="team-section">
+                <div class="team-header">
+                    <h3>Leadership Team</h3>
+                    <p style="color: #b8b8b8;">Meet the visionaries driving CryptoVault's mission forward</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">SC</div>
+                        <div class="member-name">Sarah Chen</div>
+                        <div class="member-role">CEO & Co-Founder</div>
+                        <p class="member-bio">Former Goldman Sachs VP with 15+ years in fintech. Leading CryptoVault's
+                            global expansion and regulatory strategy.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">MR</div>
+                        <div class="member-name">Marcus Rodriguez</div>
+                        <div class="member-role">CTO & Co-Founder</div>
+                        <p class="member-bio">Blockchain architect and former Google engineer. Pioneering next-gen
+                            trading infrastructure and security protocols.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">AK</div>
+                        <div class="member-name">Aisha Kapoor</div>
+                        <div class="member-role">Chief Security Officer</div>
+                        <p class="member-bio">Cybersecurity expert with background in military-grade encryption.
+                            Ensuring CryptoVault's unbreachable security standards.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">DL</div>
+                        <div class="member-name">David Liu</div>
+                        <div class="member-role">Head of Compliance</div>
+                        <p class="member-bio">Former SEC regulatory specialist. Leading CryptoVault's compliance
+                            initiatives across global jurisdictions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Values -->
+            <div class="values-section">
+                <div class="values-header">
+                    <h3>Our Core Values</h3>
+                    <p style="color: #b8b8b8;">The principles that guide everything we do</p>
+                </div>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">🔒</div>
+                        <h4 class="value-title">Security First</h4>
+                        <p class="value-description">Your assets' security is our top priority. We employ military-grade
+                            encryption and multi-layer protection protocols.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🌟</div>
+                        <h4 class="value-title">Innovation</h4>
+                        <p class="value-description">We continuously push boundaries, developing cutting-edge solutions
+                            that shape the future of digital finance.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🤝</div>
+                        <h4 class="value-title">Trust</h4>
+                        <p class="value-description">Transparency and integrity form the foundation of every
+                            interaction, building lasting relationships with our community.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🌍</div>
+                        <h4 class="value-title">Accessibility</h4>
+                        <p class="value-description">Making cryptocurrency accessible to everyone, regardless of
+                            location, experience level, or background.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
