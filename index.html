@@ -362,9 +362,10 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero{
+            .hero {
                 margin-top: 80px;
             }
+
             .hero-content {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -412,26 +413,11 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-    
-        </nav>
-    </header>
-
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <div class="logo">CryptoVault</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="features.html">Features</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero" >
+    <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -449,98 +435,15 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="section">
-        <div class="container">
-            <h2>Why Choose CryptoVault?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Bank-Level Security</h3>
-                    <p>Multi-layer encryption and cold storage protection for your digital assets.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Lightning Fast</h3>
-                    <p>Execute trades in milliseconds with our advanced matching engine.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Advanced Analytics</h3>
-                    <p>Professional-grade charts and real-time market analysis tools.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Global Access</h3>
-                    <p>Trade 24/7 from anywhere in the world with full mobile support.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💎</div>
-                    <h3>Premium Assets</h3>
-                    <p>Access to 500+ cryptocurrencies including exclusive early-stage tokens.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Smart Trading</h3>
-                    <p>AI-powered trading signals and automated portfolio management.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2>About CryptoVault</h2>
-            <div style="max-width: 800px; margin: 0 auto; text-align: center; color: #b8b8b8; line-height: 1.8;">
-                <p style="margin-bottom: 2rem;">Founded in 2018 by a team of blockchain pioneers and financial experts,
-                    CryptoVault has emerged as the world's most trusted cryptocurrency platform. We serve over 10
-                    million users across 180+ countries, facilitating billions in daily trading volume.</p>
-                <p style="margin-bottom: 2rem;">Our mission is to democratize access to digital assets while maintaining
-                    the highest standards of security and compliance. We're regulated in multiple jurisdictions and
-                    backed by leading venture capital firms.</p>
-                <p>Join the future of finance with CryptoVault - where innovation meets security.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Company</h3>
-                    <a href="about.html">About Us</a>
-                  
-                </div>
-                <div class="footer-section">
-                    <h3>Products</h3>
-                    <a href="#">Spot Trading</a>
-                    <a href="#">Futures</a>
-                    <a href="#">Staking</a>
-                    <a href="#">NFT Marketplace</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Support</h3>
-                     <a href="contact.html">Contact Us</a>
-                  
-                </div>
-        
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 CryptoVault. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Welcome Back</h2>
-            <p>Enter your email to receive a verification code</p>
+            <p>Enter your credentials to login</p>
             <input type="email" id="emailInput" placeholder="Enter your email address" required>
-            <button onclick="sendVerificationCode()">Send Verification Code</button>
+            <input type="password" id="passwordInput" placeholder="Enter your password" required>
+            <button onclick="sendVerificationCode()">Login</button>
         </div>
     </div>
 
@@ -567,8 +470,9 @@
     </div>
 
     <script>
-        // Predefined verification codes
         const verificationCodes = ['0000', '1232', '2132'];
+        const validEmail = "user@example.com";
+        const validPassword = "secure123";
 
         function openLoginModal() {
             document.getElementById('loginModal').style.display = 'block';
@@ -581,13 +485,23 @@
         }
 
         function sendVerificationCode() {
-            const email = document.getElementById('emailInput').value;
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
+
             if (!email || !email.includes('@')) {
                 alert('Please enter a valid email address');
                 return;
             }
 
-            console.log('Accepted verification codes:', verificationCodes);
+            if (!password) {
+                alert('Please enter your password');
+                return;
+            }
+
+            if (email !== validEmail || password !== validPassword) {
+                alert('❌ Invalid email or password.');
+                return;
+            }
 
             document.getElementById('loginModal').style.display = 'none';
             document.getElementById('verificationModal').style.display = 'block';
@@ -623,31 +537,30 @@
 
             document.getElementById('code-0').focus();
         }
-            function verifyCode() {
-                let enteredCode = '';
-                for (let i = 0; i < 4; i++) {
-                    const input = document.getElementById(`code-${i}`);
-                    if (!input.value) {
-                        alert('Please enter the complete verification code');
-                        return;
-                    }
-                    enteredCode += input.value.toUpperCase();
-                }
 
-                if (verificationCodes.includes(enteredCode)) {
-                    document.getElementById('verificationModal').style.display = 'none';
-                    document.getElementById('successModal').style.display = 'block';
-
-                    // Redirect to withdraw.html after 3 seconds
-                    setTimeout(() => {
-                        window.location.href = 'withdraw.html';
-                    }, 3000);
-                } else {
-                    alert('❌ Invalid verification code. Please try again.');
+        function verifyCode() {
+            let enteredCode = '';
+            for (let i = 0; i < 4; i++) {
+                const input = document.getElementById(`code-${i}`);
+                if (!input.value) {
+                    alert('Please enter the complete verification code');
+                    return;
                 }
+                enteredCode += input.value.toUpperCase();
             }
 
-        // Close modal when clicking outside
+            if (verificationCodes.includes(enteredCode)) {
+                document.getElementById('verificationModal').style.display = 'none';
+                document.getElementById('successModal').style.display = 'block';
+
+                setTimeout(() => {
+                    window.location.href = 'withdraw.html';
+                }, 3000);
+            } else {
+                alert('❌ Invalid verification code. Please try again.');
+            }
+        }
+
         window.onclick = function (event) {
             const modals = ['loginModal', 'verificationModal', 'successModal'];
             modals.forEach(modalId => {
@@ -658,7 +571,6 @@
             });
         }
 
-        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -672,7 +584,6 @@
             });
         });
     </script>
-    
 </body>
 
 </html>
