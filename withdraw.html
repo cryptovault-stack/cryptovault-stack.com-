@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CryptoVault - Dashboard</title>
     <style>
         * {
@@ -144,11 +144,12 @@
             flex-wrap: wrap;
         }
 
-        .btn-primary, .btn-secondary, .btn-withdraw {
+        .btn-primary,
+        .btn-secondary,
+        .btn-withdraw {
             padding: 1rem 2rem;
             border-radius: 50px;
             font-weight: 600;
-            text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
             border: none;
@@ -159,12 +160,14 @@
         .btn-primary {
             background: linear-gradient(45deg, #00d4ff, #5b73ff);
             color: white;
+            text-decoration: none;
         }
 
         .btn-secondary {
             background: transparent;
             color: #00d4ff;
             border: 2px solid #00d4ff;
+            text-decoration: none;
         }
 
         .btn-withdraw {
@@ -172,7 +175,8 @@
             color: white;
         }
 
-        .btn-primary:hover, .btn-withdraw:hover {
+        .btn-primary:hover,
+        .btn-withdraw:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
         }
@@ -273,6 +277,40 @@
             color: #ff4757;
         }
 
+        /* Transaction History */
+        .history-section {
+            margin-bottom: 3rem;
+        }
+
+        .history-table-wrapper {
+            overflow-x: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #ffffff;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        .history-table thead {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .history-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         /* Footer */
         footer {
             background: rgba(15, 15, 15, 0.9);
@@ -371,8 +409,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Responsive */
@@ -410,6 +453,7 @@
             </ul>
             <div class="user-profile">
                 <div class="profile-icon">JD</div>
+
             </div>
         </nav>
     </header>
@@ -428,8 +472,8 @@
                 <div class="total-value">$68,123,121</div>
                 <div class="value-label">Total Portfolio Value</div>
                 <div class="portfolio-actions">
-                  
-                    <button class="btn-withdraw" onclick="showWithdrawPending()">Withdraw Funds</button>
+
+                    <button id="withdrawBtn" class="btn-withdraw">Withdraw Funds</button>
                 </div>
             </div>
 
@@ -437,6 +481,7 @@
             <div class="holdings-section">
                 <h2 class="section-title">Your Holdings</h2>
                 <div class="holdings-grid">
+                    <!-- Bitcoin -->
                     <div class="holding-card">
                         <div class="crypto-header">
                             <div class="crypto-icon">₿</div>
@@ -461,6 +506,7 @@
                         </div>
                     </div>
 
+                    <!-- Ethereum -->
                     <div class="holding-card">
                         <div class="crypto-header">
                             <div class="crypto-icon">Ξ</div>
@@ -485,6 +531,7 @@
                         </div>
                     </div>
 
+                    <!-- Solana -->
                     <div class="holding-card">
                         <div class="crypto-header">
                             <div class="crypto-icon">◎</div>
@@ -509,6 +556,7 @@
                         </div>
                     </div>
 
+                    <!-- Cardano -->
                     <div class="holding-card">
                         <div class="crypto-header">
                             <div class="crypto-icon">🔺</div>
@@ -534,6 +582,26 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Transaction History -->
+            <div class="history-section">
+                <h2 class="section-title">Transaction History</h2>
+                <div class="history-table-wrapper">
+                    <table id="transactionHistory" class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Asset</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -563,73 +631,156 @@
         </div>
     </footer>
 
-    <!-- Withdraw Pending Modal -->
+    <!-- Withdraw Modal -->
     <div id="withdrawModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <div class="pending-icon">⏳</div>
-            <h2>Withdrawal Pending</h2>
-            <p>Your withdrawal request is being processed. This may take 24-48 hours to complete. You will receive an email confirmation once the transaction is finalized.</p>
+            <h2>Withdrawal</h2>
+            <form id="withdrawForm">
+                <input type="number" id="withdrawAmount" placeholder="Enter amount (max $300)" min="1" step="0.01"
+                    required />
+                <button type="submit" class="btn-primary">Submit</button>
+            </form>
+            <p id="withdrawMessage" style="margin-top:1rem;"></p>
         </div>
     </div>
 
     <script>
-        function showWithdrawPending() {
-            document.getElementById('withdrawModal').style.display = 'block';
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            const withdrawModal = document.getElementById('withdrawModal');
+            const withdrawForm = document.getElementById('withdrawForm');
+            const withdrawMessage = document.getElementById('withdrawMessage');
+
+            withdrawBtn.addEventListener('click', showWithdrawModal);
+            withdrawForm.addEventListener('submit', handleWithdraw);
+
+            // Show modal and reset
+            function showWithdrawModal() {
+                withdrawForm.reset();
+                withdrawMessage.textContent = '';
+                withdrawModal.style.display = 'block';
+            }
+
+            // Handle withdraw submission
+            function handleWithdraw(e) {
+                e.preventDefault();
+                const amount = parseFloat(document.getElementById('withdrawAmount').value);
+
+                // Enforce $300 cap
+                if (amount > 300) {
+                    withdrawMessage.textContent = 'Weekly limit exceeded';
+                    withdrawMessage.style.color = '#ff4757';
+                    return;
+                }
+
+                // Next order key
+                let count = parseInt(localStorage.getItem('orderCount')) || 0;
+                count++;
+                localStorage.setItem('orderCount', count);
+
+                const orderKey = `order${count}`;
+                const order = {
+                    amount,
+                    date: new Date().toISOString(),
+                    status: 'pending'
+                };
+
+                localStorage.setItem(orderKey, JSON.stringify(order));
+
+                withdrawMessage.textContent = `Withdrawal pending (Order ID: ${orderKey})`;
+                withdrawMessage.style.color = '#00d4ff';
+
+                // Refresh history
+                loadTransactionHistory();
+            }
+
+            // Close when clicking outside
+            window.addEventListener('click', e => {
+                if (e.target === withdrawModal) closeModal();
+            });
+
+            // Generate some dummy auto-generated transactions
+            function generateDummyTransactions() {
+                return [
+                    { date: '2025-06-13T10:15:00Z', type: 'Withdraw', asset: 'BTC', amount: 0.1, status: 'completed' },
+                    { date: '2025-06-12T14:20:00Z', type: 'Withdraw', asset: 'ETH', amount: 5, status: 'completed' },
+                    { date: '2025-06-11T09:30:00Z', type: 'Withdraw', asset: 'ADA', amount: 200, status: 'completed' },
+                    { date: '2025-06-10T16:45:00Z', type: 'Withdraw', asset: 'CryptoPunk #1234', amount: 1, status: 'completed' },
+                    { date: '2025-06-09T12:00:00Z', type: 'Withdraw', asset: 'SOL→ETH', amount: 10, status: 'completed' }
+                ];
+            }
+
+            // Load and render the transaction history
+            function loadTransactionHistory() {
+                const tbody = document.querySelector('#transactionHistory tbody');
+                tbody.innerHTML = '';
+
+                // start with dummy
+                let transactions = generateDummyTransactions();
+
+                // then localStorage withdrawals
+                const count = parseInt(localStorage.getItem('orderCount')) || 0;
+                for (let i = 1; i <= count; i++) {
+                    const raw = localStorage.getItem(`order${i}`);
+                    if (!raw) continue;
+                    const ord = JSON.parse(raw);
+                    transactions.push({
+                        date: ord.date,
+                        type: 'Withdraw',
+                        asset: 'USD',
+                        amount: ord.amount,
+                        status: ord.status
+                    });
+                }
+
+                // sort desc by date
+                transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                // render rows
+                transactions.forEach(tx => {
+                    const tr = document.createElement('tr');
+                    const tdDate = document.createElement('td');
+                    const tdType = document.createElement('td');
+                    const tdAsset = document.createElement('td');
+                    const tdAmt = document.createElement('td');
+                    const tdStatus = document.createElement('td');
+
+                    tdDate.textContent = new Date(tx.date).toLocaleString();
+                    tdType.textContent = tx.type;
+                    tdAsset.textContent = tx.asset;
+                    tdAmt.textContent = tx.amount;
+                    tdStatus.textContent = tx.status.charAt(0).toUpperCase() + tx.status.slice(1);
+
+                    tr.append(tdDate, tdType, tdAsset, tdAmt, tdStatus);
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // initial load
+            loadTransactionHistory();
+        });
 
         function closeModal() {
             document.getElementById('withdrawModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('withdrawModal');
-            if (event.target === modal) {
-                closeModal();
-            }
+        // Helpers to read/update orders
+        function getOrder(orderKey) {
+            const raw = localStorage.getItem(orderKey);
+            return raw ? JSON.parse(raw) : null;
         }
 
-        // Animate numbers on load
-        function animateValue(id, start, end, duration) {
-            const obj = document.getElementById(id);
-            const range = end - start;
-            const minTimer = 50;
-            let stepTime = Math.abs(Math.floor(duration / range));
-            stepTime = Math.max(stepTime, minTimer);
-            const startTime = new Date().getTime();
-            const endTime = startTime + duration;
-            let timer;
-
-            function run() {
-                const now = new Date().getTime();
-                const remaining = Math.max((endTime - now) / duration, 0);
-                const value = Math.round(end - (remaining * range));
-                if (obj) {
-                    obj.innerHTML = '$' + value.toLocaleString();
-                }
-                if (value == end) {
-                    clearInterval(timer);
-                }
+        function updateOrderStatus(orderKey, newStatus) {
+            const order = getOrder(orderKey);
+            if (!order) {
+                console.warn(`Order "${orderKey}" not found.`);
+                return;
             }
-
-            timer = setInterval(run, stepTime);
-            run();
+            order.status = newStatus;
+            localStorage.setItem(orderKey, JSON.stringify(order));
         }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
     </script>
 </body>
 
