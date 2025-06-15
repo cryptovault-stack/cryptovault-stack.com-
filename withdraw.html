@@ -437,6 +437,31 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* === Profile pop-up === */
+.profile-menu{
+    display:none;                   /* hidden by default */
+    position:absolute;
+    top:55px;                       /* just below the icon */
+    right:0;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(10px);
+    border-radius:12px;
+    padding:.75rem 1.25rem;
+    z-index:1500;
+    min-width:140px;
+    text-align:center;
+}
+.profile-menu .signout-link{
+    color:#ff6b35;
+    font-weight:600;
+    text-decoration:none;
+    transition:color .25s;
+}
+.profile-menu .signout-link:hover{
+    color:#00d4ff;
+}
+
     </style>
 </head>
 
@@ -452,8 +477,17 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="user-profile">
-                <div class="profile-icon">JD</div>
+          
+<!-- …inside <nav class="container">  -->
+<div class="user-profile" style="position:relative;">
+    <div class="profile-icon" id="profileIcon">SGA</div>
 
+    <!-- new pop-up -->
+    <div id="profileMenu" class="profile-menu">
+        <a href="home.html" class="signout-link">Sign out</a>
+    </div>
+</div>
+    
             </div>
         </nav>
     </header>
@@ -704,11 +738,11 @@
             // Generate some dummy auto-generated transactions
             function generateDummyTransactions() {
                 return [
-                    { date: '2025-06-13T10:15:00Z', type: 'Withdraw', asset: 'BTC', amount: 0.1, status: 'completed' },
-                    { date: '2025-06-12T14:20:00Z', type: 'Withdraw', asset: 'ETH', amount: 5, status: 'completed' },
-                    { date: '2025-06-11T09:30:00Z', type: 'Withdraw', asset: 'ADA', amount: 200, status: 'completed' },
-                    { date: '2025-06-10T16:45:00Z', type: 'Withdraw', asset: 'CryptoPunk #1234', amount: 1, status: 'completed' },
-                    { date: '2025-06-09T12:00:00Z', type: 'Withdraw', asset: 'SOL→ETH', amount: 10, status: 'completed' }
+                    { date: '2025-06-13T10:15:00Z', type: 'Withdraw', asset: 'USD', amount: 80000, status: 'completed' },
+                    { date: '2025-06-12T14:20:00Z', type: 'Withdraw', asset: 'USD', amount: 12000, status: 'completed' },
+                    { date: '2025-06-11T09:30:00Z', type: 'Withdraw', asset: 'USD', amount: 9000, status: 'completed' },
+                    { date: '2025-06-10T16:45:00Z', type: 'Withdraw', asset: 'USD', amount: 1348, status: 'completed' },
+                    { date: '2025-06-09T12:00:00Z', type: 'Withdraw', asset: 'USD', amount: 10000, status: 'completed' }
                 ];
             }
 
@@ -781,6 +815,18 @@
             order.status = newStatus;
             localStorage.setItem(orderKey, JSON.stringify(order));
         }
+        // === Profile pop-up toggle ===
+            const profileIcon = document.getElementById('profileIcon');
+            const profileMenu = document.getElementById('profileMenu');
+
+            profileIcon.addEventListener('click', e => {
+                e.stopPropagation();                                    // keep click from bubbling up
+                profileMenu.style.display = (profileMenu.style.display === 'block') ? 'none' : 'block';
+            });
+
+            // hide the menu if user clicks anywhere else
+            window.addEventListener('click', () => profileMenu.style.display = 'none');
+
     </script>
 </body>
 
